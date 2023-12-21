@@ -17,7 +17,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
   app:
-    build: ./backend
+    build: ./
     container_name: app
     hostname: app
     ports:
