@@ -60,6 +60,9 @@ cover/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+apps/*/migrations/*
+!apps/*/migrations/__init__.py
+
 
 # Flask stuff:
 instance/
@@ -158,8 +161,3 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
-
-
-# Django migrations
-apps/*/migrations/*
-!apps/*/migrations/__init__.py
