@@ -1,34 +1,9 @@
-volumes:
-  postgres-data:
-    external: true
-
 services:
-  postgres:
-    image: postgres:16
-    container_name: postgres
-    hostname: postgres
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: forteplus
-      POSTGRES_PASSWORD: 'N[W3ZUN-Jd75zlNDdYj8Zzh8"Y\;l,0J2?s7)`y1mZ'
-      POSTGRES_DB: postgres
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-
-  app:
+  nexus:
     build: ./
-    container_name: app
-    hostname: app
+    container_name: nexus
+    hostname: nexus
     ports:
       - 8080:8080
-    depends_on:
-      - postgres
-    environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
     env_file:
       - .env
