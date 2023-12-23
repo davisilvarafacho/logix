@@ -1,18 +1,16 @@
 from datetime import timedelta, date
 
 from django.db.models import Sum
-from django.utils.timezone import now
 from django.db.models.functions import TruncDay
 
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework import status
 
 from .serializers import (
-    Despesa,
-    DespesasSerializer,
+    SaidaDinheiro,
+    SaidaDinheiroSerializer,
     EntradaDinheiro,
     EntradaDinheiroSerializer,
 )
@@ -33,8 +31,8 @@ class EntradaDinheiroViewSet(ReadOnlyModelViewSet):
 
 
 class SaidaDinheiroViewSet(ReadOnlyModelViewSet):
-    queryset = Despesa.objects.all()
-    serializer_class = DespesasSerializer
+    queryset = SaidaDinheiro.objects.all()
+    serializer_class = SaidaDinheiroSerializer
     filterset_fields = {
         "data_gasto": ["month"],
     }

@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import Despesa, EntradaDinheiro, Categoria
+from .models import SaidaDinheiro, EntradaDinheiro, CategoriaGasto
 
 
-class DespesasSerializer(serializers.ModelSerializer):
+class SaidaDinheiroSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Despesa
+        model = SaidaDinheiro
         fields = "__all__"
         depth = 1
 
@@ -16,7 +16,7 @@ class EntradaDinheiroSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class MotivoSerializer(serializers.ModelSerializer):
+class CategoriaGastoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Categoria
+        model = CategoriaGasto
         fields = "__all__"
