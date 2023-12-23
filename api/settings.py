@@ -10,7 +10,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG") == "True"
 
 MODE = os.environ.get("DJANGO_MODE")
 
-DEV = MODE in ("development", "test", "sandbox")
+DEV = MODE == "development"
 
 PROD = MODE == "production"
 
@@ -43,7 +43,7 @@ LIBS_APPS = [
     "import_export",
 ]
 
-PROJECT_APPS = [
+NEXUS_APPS = [
     "apps.system.base",
     "apps.system.core",
     "apps.system.conf",
@@ -51,7 +51,7 @@ PROJECT_APPS = [
     "apps.financeiro",
 ]
 
-INSTALLED_APPS = LIBS_APPS + DJANGO_APPS + PROJECT_APPS
+INSTALLED_APPS = LIBS_APPS + DJANGO_APPS + NEXUS_APPS
 
 
 DJANGO_MIDDLEWARE = [
@@ -68,12 +68,12 @@ LIBS_MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-PROJECT_MIDDLEWARE = []
+NEXUS_MIDDLEWARE = []
 
 if DEBUG:
-    PROJECT_MIDDLEWARE.append("apps.system.core.middlewares.DevMiddleware")
+    NEXUS_MIDDLEWARE.append("apps.system.core.middlewares.DevMiddleware")
 
-MIDDLEWARE = DJANGO_MIDDLEWARE + LIBS_MIDDLEWARE + PROJECT_MIDDLEWARE
+MIDDLEWARE = DJANGO_MIDDLEWARE + LIBS_MIDDLEWARE + NEXUS_MIDDLEWARE
 
 
 ROOT_URLCONF = "api.urls"
@@ -99,13 +99,8 @@ WSGI_APPLICATION = "api.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "nexus",
-        "USER": "davi.s.rafacho.developer",
-        "PASSWORD": os.environ.get("DATABASE_PASSWORD"),
-        "HOST": "ep-dark-dew-02097280.us-east-1.aws.neon.tech",
-        "PORT": "5432",
-        "OPTIONS": {"sslmode": "require"},
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     },
 }
 
@@ -169,6 +164,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
 
 
+UNFOLD = {
+    "ENVIRONMENT": "apps.system.conf.enviroments.enviroment_callback",
+    "SITE_SYMBOL": "money",
+    "SHOW_VIEW_ON_SITE": False,
+}
+
+
 REST_FRAMEWORK = {
     "PAGE_SIZE": 12,
     "DEFAULT_PAGINATION_CLASS": "apps.system.core.pagination.CustomPagination",
@@ -189,11 +191,4 @@ SIMPLE_JWT = {
     "USER_ID_CLAIM": "sub",
     "AUDIENCE": "ZETTABYTE MIDAS v0.0.1",
     "ISSUER": "ZETTABYTE MIDAS v0.0.1",
-}
-
-
-UNFOLD = {
-    "ENVIRONMENT": "apps.system.conf.enviroments.enviroment_callback",
-    "SITE_SYMBOL": "money",
-    "SHOW_VIEW_ON_SITE": False,
 }
