@@ -54,7 +54,7 @@ class EntradaDinheiro(Base):
         verbose_name_plural = _("Entradas de dinheiro")
 
 
-class Despesa(Base):
+class SaidaDinheiro(Base):
     entrada = models.ForeignKey(
         "EntradaDinheiro",
         verbose_name=_("entrada"),
@@ -62,10 +62,10 @@ class Despesa(Base):
         related_name="saidas",
     )
 
-    fixa = models.BooleanField(
-        _("gasto fixo"),
+    obrigatoria = models.BooleanField(
+        _("despesa"),
         default=False,
-        help_text=_("Informa se a despesa é fixa/recorrente ou não."),
+        help_text=_("Informa se a saída é uma despesa na qual eu não posso ficar sem."),
     )
 
     parcela = models.PositiveIntegerField(
@@ -99,7 +99,7 @@ class Despesa(Base):
     )
 
     categoria = models.ForeignKey(
-        "Categoria",
+        "CategoriaGasto",
         verbose_name=_("motivo"),
         on_delete=models.CASCADE,
         related_name="saidas",
@@ -108,20 +108,20 @@ class Despesa(Base):
     paga = models.BooleanField(
         _("paga"),
         default=False,
-        help_text=_("Informa se a despesa já foi paga ou não."),
+        help_text=_("Informa se a saída já foi paga ou não."),
     )
 
     def __str__(self):
         return self.descricao
 
     class Meta:
-        db_table = "despesa"
+        db_table = "saida_dinheiro"
         ordering = ["-id"]
-        verbose_name = _("Despesa")
-        verbose_name_plural = _("Despesas")
+        verbose_name = _("Saída de dinheiro")
+        verbose_name_plural = _("Gastos e despesas")
 
 
-class Categoria(Base):
+class CategoriaGasto(Base):
     TIPOS = (
         ("DES", "Despesas fixa"),  # Despesas fixas, como internet, faculdade, etc
         ("LAZ", "Lazer/Diversão"),  # Dinheiro gasto em rolês, coisas para mim, etc
@@ -145,8 +145,8 @@ class Categoria(Base):
     class Meta:
         db_table = "categoria"
         ordering = ["-id"]
-        verbose_name = _("Categoria da despesa")
-        verbose_name_plural = _("Categorias da despesa")
+        verbose_name = _("Categoria do gasto")
+        verbose_name_plural = _("Categorias dos gastos")
 
 
 class ItemListaDesejo(Base):
