@@ -123,10 +123,12 @@ class SaidaDinheiro(Base):
 
 class CategoriaGasto(Base):
     TIPOS = (
-        ("DES", "Despesas fixa"),  # Despesas fixas, como internet, faculdade, etc
-        ("LAZ", "Lazer/Diversão"),  # Dinheiro gasto em rolês, coisas para mim, etc
-        ("ECO", "Economizar"),  # Dinheiro guardado
-        ("INV", "Investir"),  # Dinheiro investido
+        ("DES", "Despesas fixa"),
+        ("LAZ", "Lazer/Diversão"),
+        ("ECO", "Economizar"),  #
+        ("INV", "Investir"),  #
+        ("CRE", "Crescimento"),  #
+        ("IMP", "Imprevisto"),  #
     )
 
     tipo = models.CharField(
