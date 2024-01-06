@@ -62,10 +62,29 @@ class SaidaDinheiro(Base):
         related_name="saidas",
     )
 
+    descricao = models.TextField(_("descrição"))
+
     obrigatoria = models.BooleanField(
         _("despesa"),
         default=False,
         help_text=_("Informa se a saída é uma despesa na qual eu não posso ficar sem."),
+    )
+
+    valor_total = models.FloatField(
+        _("valor"),
+        help_text=_("Valor do pagamento"),
+        validators=[
+            MinValueValidator(
+                0.01, message=_("O valor do pagamento deve ser maior que zero.")
+            ),
+        ],
+    )
+
+    destino = models.ForeignKey(
+        "DestinoGasto",
+        verbose_name=_("destino"),
+        on_delete=models.CASCADE,
+        related_name="saidas",
     )
 
     parcela = models.PositiveIntegerField(
@@ -80,22 +99,9 @@ class SaidaDinheiro(Base):
         blank=True
     )
 
-    valor_total = models.FloatField(
-        _("valor"),
-        help_text=_("Valor do pagamento"),
-        validators=[
-            MinValueValidator(
-                0.01, message=_("O valor do pagamento deve ser maior que zero.")
-            ),
-        ],
-    )
-
-    descricao = models.TextField(_("descrição"))
-
     data_gasto = models.DateField(
         _("data do gasto"),
         default=django_timezone.now,
-        help_text=_("Dia que foi gasto o dinheiro"),
     )
 
     categoria = models.ForeignKey(
@@ -108,7 +114,6 @@ class SaidaDinheiro(Base):
     paga = models.BooleanField(
         _("paga"),
         default=False,
-        help_text=_("Informa se a saída já foi paga ou não."),
     )
 
     def __str__(self):
@@ -119,6 +124,19 @@ class SaidaDinheiro(Base):
         ordering = ["-id"]
         verbose_name = _("Saída de dinheiro")
         verbose_name_plural = _("Gastos e despesas")
+
+
+class DestinoGasto(Base):
+    nome = models.CharField(_("nome"), max_length=50, help_text=_("Nome do destino"))
+
+    def __str__(self):
+        return self.nome
+    
+    class Meta:
+        db_table = "destino"
+        ordering = ["-id"]
+        verbose_name = _("Destino do gasto")
+        verbose_name_plural = _("Destinos dos gastos")
 
 
 class CategoriaGasto(Base):
