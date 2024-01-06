@@ -1,4 +1,6 @@
 from django.db import models
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone as django_timezone
@@ -101,7 +103,6 @@ class SaidaDinheiro(Base):
 
     data_gasto = models.DateField(
         _("data do gasto"),
-        default=django_timezone.now,
         null=True,
         blank=True
     )
@@ -215,3 +216,9 @@ class ItemListaDesejo(Base):
         ordering = ["-id"]
         verbose_name = _("Item da lista de desejos")
         verbose_name_plural = _("Lista de desejos")
+
+
+@receiver(pre_save, sender=SaidaDinheiro)
+def set_gasto_date(sender, instance, **kwargs):
+    if not instance.data_gasto:
+        instance.data_gasto = instance.entrada.data_entrada
