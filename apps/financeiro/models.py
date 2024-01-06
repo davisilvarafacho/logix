@@ -143,10 +143,10 @@ class CategoriaGasto(Base):
     TIPOS = (
         ("DES", "Despesas fixa"),
         ("LAZ", "Lazer/Diversão"),
-        ("ECO", "Economizar"),  #
-        ("INV", "Investir"),  #
-        ("CRE", "Crescimento"),  #
-        ("IMP", "Imprevisto"),  #
+        ("ECO", "Economizar"),
+        ("INV", "Investimentos"),
+        ("CRE", "Crescimento"),
+        ("IMP", "Imprevisto"),
     )
 
     tipo = models.CharField(
