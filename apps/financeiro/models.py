@@ -102,6 +102,8 @@ class SaidaDinheiro(Base):
     data_gasto = models.DateField(
         _("data do gasto"),
         default=django_timezone.now,
+        null=True,
+        blank=True
     )
 
     categoria = models.ForeignKey(
