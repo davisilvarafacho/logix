@@ -12,6 +12,7 @@ from apps.financeiro.models import (
     SaidaDinheiro,
     CategoriaGasto,
     ItemListaDesejo,
+    DestinoGasto,
 )
 
 
@@ -143,6 +144,16 @@ class ItemListaDesejoAdmin(ModelAdmin, ImportExportModelAdmin):
     export_form_class = ExportForm
     list_display = ("nome", "tipo", "valor", "comprado")
     list_filter = ("comprado", "tipo")
+    search_fields = ("nome",)
+    ordering = ("-id",)
+    exclude = ("data_hora_criacao", "data_hora_atualizacao", "ativo")
+
+
+@admin.register(DestinoGasto)
+class DestinoGastoAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+    list_display = ("nome",)
     search_fields = ("nome",)
     ordering = ("-id",)
     exclude = ("data_hora_criacao", "data_hora_atualizacao", "ativo")
