@@ -75,7 +75,7 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
         ),
     )
 
-    list_filter = ("entrada",)
+    list_filter = ("paga", "entrada", "categoria__tipo")
     ordering = ("-id",)
     search_fields = ("descricao",)
     exclude = ("data_hora_criacao", "data_hora_atualizacao", "ativo")
