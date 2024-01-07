@@ -30,6 +30,8 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
 
+    list_per_page = 15
+
     list_display = (
         "descricao",
         "categoria",
