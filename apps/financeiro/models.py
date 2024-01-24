@@ -142,14 +142,14 @@ class DestinoGasto(Base):
         verbose_name_plural = _("Destinos dos gastos")
 
 
-class CategoriaGasto(Base):
+class MotivoGasto(Base):
     TIPOS = (
-        ("DES", "Despesas fixa"),
+        ("DES", "Despesas/Necessidade"),
         ("LAZ", "Lazer/Diversão"),
-        ("ECO", "Economizar"),
+        ("ECO", "Economizar "),
         ("INV", "Investimentos"),
-        ("CRE", "Crescimento"),
-        ("IMP", "Imprevisto"),
+        ("CRE", "Crescimento Pessoal"),
+        ("IMP", "Imprevistos"),
     )
 
     tipo = models.CharField(
@@ -159,17 +159,16 @@ class CategoriaGasto(Base):
         default="DES",
     )
 
-    nome = models.CharField(_("nome"), max_length=50, help_text=_("Nome da categoria"))
-    descricao = models.TextField(_("descrição"), blank=True, null=True)
+    nome = models.CharField(_("nome"), max_length=50)
 
     def __str__(self):
         return self.nome
 
     class Meta:
-        db_table = "categoria"
+        db_table = "motivo_gasto"
         ordering = ["-id"]
-        verbose_name = _("Categoria do gasto")
-        verbose_name_plural = _("Categorias dos gastos")
+        verbose_name = _("Motivo do gasto")
+        verbose_name_plural = _("Motivos dos gastos")
 
 
 class ItemListaDesejo(Base):
