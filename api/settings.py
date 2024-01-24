@@ -43,7 +43,7 @@ LIBS_APPS = [
     "import_export",
 ]
 
-NEXUS_APPS = [
+LOGIX_APPS = [
     "apps.system.base",
     "apps.system.core",
     "apps.system.conf",
@@ -51,7 +51,7 @@ NEXUS_APPS = [
     "apps.financeiro",
 ]
 
-INSTALLED_APPS = LIBS_APPS + DJANGO_APPS + NEXUS_APPS
+INSTALLED_APPS = LIBS_APPS + DJANGO_APPS + LOGIX_APPS
 
 
 DJANGO_MIDDLEWARE = [
@@ -68,12 +68,12 @@ LIBS_MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-NEXUS_MIDDLEWARE = []
+LOGIX_MIDDLEWARE = []
 
 if DEBUG:
-    NEXUS_MIDDLEWARE.append("apps.system.core.middlewares.DevMiddleware")
+    LOGIX_MIDDLEWARE.append("apps.system.core.middlewares.DevMiddleware")
 
-MIDDLEWARE = DJANGO_MIDDLEWARE + LIBS_MIDDLEWARE + NEXUS_MIDDLEWARE
+MIDDLEWARE = DJANGO_MIDDLEWARE + LIBS_MIDDLEWARE + LOGIX_MIDDLEWARE
 
 
 ROOT_URLCONF = "api.urls"

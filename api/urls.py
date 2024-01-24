@@ -10,7 +10,7 @@ from rest_framework_simplejwt.views import (
     token_verify,
 )
 
-apps_urls = [path("api/v1/", include(app + ".urls")) for app in settings.NEXUS_APPS]
+apps_urls = [path("api/v1/", include(app + ".urls")) for app in settings.LOGIX_APPS]
 
 urlpatterns = [
     path("admin/", admin.site.urls),

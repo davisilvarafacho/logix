@@ -24,7 +24,7 @@ class Command(BaseCommand):
         # self.apply_migrations()
 
     def delete_all_migrations_folders(self):
-        for app in settings.NEXUS_APPS:
+        for app in settings.LOGIX_APPS:
             app_path = app.replace('.', '/')
             migration_path = app_path + '/migrations'
             
@@ -37,7 +37,7 @@ class Command(BaseCommand):
         print(f'[x] All migrations deleted...')
 
     def create_all_migrations_folders(self):
-        for app in settings.NEXUS_APPS:
+        for app in settings.LOGIX_APPS:
             app_path = app.replace('.', '/')
             migration_path = app_path + '/migrations'
             init_path = migration_path + '/__init__.py'
@@ -79,7 +79,7 @@ class Command(BaseCommand):
 
     # NOT USED
     def ask_delete_migrations_folders(self):
-        for app in settings.NEXUS_APPS:
+        for app in settings.LOGIX_APPS:
             app_path = app.replace('.', '/')
             migration_path = app_path + '/migrations'
 
