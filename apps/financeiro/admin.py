@@ -34,7 +34,8 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
 
     list_display = (
         "descricao",
-        "motivo",
+        "classe",
+        # "motivo",
         "valor_total",
         "paga",
         "parcela",
@@ -73,10 +74,11 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
             },
         ),
         (
-            _("Gerencimaneto"),
+            _("Gerenciamento e controle"),
             {
                 "fields": (
-                    "motivo",
+                    "classe",
+                    # "motivo",
                 )
             },
         ),
@@ -91,16 +93,16 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
         ),
     )
 
-    list_filter = ("paga", "entrada", "motivo__tipo")
+    list_filter = ("paga", "entrada", "classe")  # , "motivo__tipo"
     ordering = ("-id",)
     search_fields = ("descricao",)
     exclude = ("data_hora_criacao", "data_hora_atualizacao", "ativo")
 
     actions = (
+        "calcular_total_gastos",
         "marcar_como_paga",
         "marcar_como_nao_paga",
         "duplicar_saida",
-        "calcular_total_gastos",
     )
 
     @admin.action(description=_("Marcar como paga"))

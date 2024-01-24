@@ -57,11 +57,13 @@ class EntradaDinheiro(Base):
 
 
 class SaidaDinheiro(Base):
-    entrada = models.ForeignKey(
-        "EntradaDinheiro",
-        verbose_name=_("entrada"),
-        on_delete=models.CASCADE,
-        related_name="saidas",
+    CLASSES = (
+        ("DES", "Despesas/Necessidade"),
+        ("LAZ", "Lazer/Diversão"),
+        ("ECO", "Economizar "),
+        ("INV", "Investimentos"),
+        ("CRE", "Crescimento Pessoal"),
+        ("IMP", "Imprevistos"),
     )
 
     descricao = models.TextField(_("descrição"))
@@ -74,6 +76,15 @@ class SaidaDinheiro(Base):
                 0.01, message=_("O valor do pagamento deve ser maior que zero.")
             ),
         ],
+    )
+
+    classe = models.CharField(_("classe"), choices=CLASSES, max_length=3, default="LAZ")
+
+    entrada = models.ForeignKey(
+        "EntradaDinheiro",
+        verbose_name=_("entrada"),
+        on_delete=models.CASCADE,
+        related_name="saidas",
     )
 
     destino = models.ForeignKey(
@@ -97,12 +108,12 @@ class SaidaDinheiro(Base):
 
     data_gasto = models.DateField(_("data do gasto"), null=True, blank=True)
 
-    motivo = models.ForeignKey(
-        "MotivoGasto",
-        verbose_name=_("motivo"),
-        on_delete=models.CASCADE,
-        related_name="saidas",
-    )
+    # motivo = models.ForeignKey(
+        # "MotivoGasto",
+        # verbose_name=_("motivo"),
+        # on_delete=models.CASCADE,
+        # related_name="saidas",
+    # )
 
     paga = models.BooleanField(
         _("paga"),
@@ -124,6 +135,10 @@ class SaidaDinheiro(Base):
             "Informa se a saída é uma parte de um pagamento com várias saídas, porque o dinheiro utilizado se originou de mais de uma entrada"
         ),
     )
+
+    @property
+    def valor_total_parcelas(self):
+        return self.valor_total * self.total_parcelas
 
     def __str__(self):
         return self.descricao
@@ -228,3 +243,10 @@ class ItemListaDesejo(Base):
 def set_gasto_date(sender, instance, **kwargs):
     if not instance.data_gasto:
         instance.data_gasto = instance.entrada.data_entrada
+
+
+@receiver(pre_save, sender=EntradaDinheiro)
+def set_gasto_date(sender, instance, **kwargs):
+    for saida in instance.saidas.all():
+        saida.data_gasto = instance.data_entrada
+        saida.save()
