@@ -66,12 +66,6 @@ class SaidaDinheiro(Base):
 
     descricao = models.TextField(_("descrição"))
 
-    obrigatoria = models.BooleanField(
-        _("despesa"),
-        default=False,
-        help_text=_("Informa se a saída é uma despesa na qual eu não posso ficar sem."),
-    )
-
     valor_total = models.FloatField(
         _("valor"),
         help_text=_("Valor do pagamento"),
@@ -89,26 +83,22 @@ class SaidaDinheiro(Base):
         related_name="saidas",
     )
 
-    parcela = models.PositiveIntegerField(
-        _("parcela"),
-        null=True,
-        blank=True
+    despesa = models.BooleanField(
+        _("despesa"),
+        default=False,
+        help_text=_("Informa se a saída é algo essencial e indispensável ao longo do mês"),
     )
+
+    parcela = models.PositiveIntegerField(_("parcela"), null=True, blank=True)
 
     total_parcelas = models.PositiveIntegerField(
-        _("total de parcelas"),
-        null=True,
-        blank=True
+        _("total de parcelas"), null=True, blank=True
     )
 
-    data_gasto = models.DateField(
-        _("data do gasto"),
-        null=True,
-        blank=True
-    )
+    data_gasto = models.DateField(_("data do gasto"), null=True, blank=True)
 
-    categoria = models.ForeignKey(
-        "CategoriaGasto",
+    motivo = models.ForeignKey(
+        "MotivoGasto",
         verbose_name=_("motivo"),
         on_delete=models.CASCADE,
         related_name="saidas",
@@ -117,6 +107,22 @@ class SaidaDinheiro(Base):
     paga = models.BooleanField(
         _("paga"),
         default=False,
+    )
+
+    saida = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        verbose_name=_("saída"),
+        blank=True,
+        null=True,
+    )
+
+    parcial = models.BooleanField(
+        _("parcial"),
+        default=False,
+        help_text=_(
+            "Informa se a saída é uma parte de um pagamento com várias saídas, porque o dinheiro utilizado se originou de mais de uma entrada"
+        ),
     )
 
     def __str__(self):
