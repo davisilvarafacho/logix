@@ -1,8 +1,8 @@
 services:
-  nexus:
+  logix:
     build: ./
-    container_name: nexus
-    hostname: nexus
+    container_name: logix
+    hostname: logix
     ports:
       - 8080:8080
     env_file:
