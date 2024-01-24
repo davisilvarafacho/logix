@@ -11,13 +11,13 @@ from apps.system.base.models import Base
 class EntradaDinheiro(Base):
     ORIGENS = (
         ("SAL", "Salário"),
-        ("DEC", "Decimo terceiro"),
+        ("DEC", "Décimo terceiro"),
         ("FER", "Férias"),
         ("PRO", "Projeto"),
         ("MAN", "Manutenção"),
         ("OUT", "Outros"),
     )
-    
+
     origem = models.CharField(
         _("tipo"),
         max_length=3,
