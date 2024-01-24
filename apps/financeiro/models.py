@@ -131,10 +131,11 @@ class SaidaDinheiro(Base):
 
 class DestinoGasto(Base):
     nome = models.CharField(_("nome"), max_length=50, help_text=_("Nome do destino"))
+    descricao = models.TextField(_("descrição"), blank=True, null=True)
 
     def __str__(self):
         return self.nome
-    
+
     class Meta:
         db_table = "destino"
         ordering = ["-id"]
