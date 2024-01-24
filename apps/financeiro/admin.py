@@ -10,7 +10,7 @@ from unfold.contrib.import_export.forms import ExportForm, ImportForm
 from apps.financeiro.models import (
     EntradaDinheiro,
     SaidaDinheiro,
-    CategoriaGasto,
+    MotivoGasto,
     ItemListaDesejo,
     DestinoGasto,
 )
@@ -34,14 +34,11 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
 
     list_display = (
         "descricao",
-        "categoria",
+        "motivo",
         "valor_total",
         "paga",
-        "destino",
-        "obrigatoria",
         "parcela",
         "total_parcelas",
-        "entrada",
     )
 
     fieldsets = (
@@ -49,35 +46,52 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
             None,
             {
                 "fields": (
-                    "valor_total",
-                    "data_gasto",
                     "descricao",
+                    "valor_total",
+                    "paga",
                 )
             },
         ),
-        (_("Pagamento"), {"fields": ("entrada", "destino")}),
-        (_("Classificações"), {"fields": ("categoria",)}),
+        (
+            _("Pagamento"),
+            {
+                "fields": (
+                    "entrada",
+                    "destino",
+                    "data_gasto",
+                )
+            },
+        ),
         (
             _("Recorrência"),
             {
                 "fields": (
                     "parcela",
                     "total_parcelas",
+                    "despesa",
                 )
             },
         ),
         (
-            _("Informações de controle"),
+            _("Gerencimaneto"),
             {
                 "fields": (
-                    "paga",
-                    "obrigatoria",
+                    "motivo",
+                )
+            },
+        ),
+        (
+            _("Informações Complementares"),
+            {
+                "fields": (
+                    "parcial",
+                    "saida"
                 )
             },
         ),
     )
 
-    list_filter = ("paga", "entrada", "categoria__tipo")
+    list_filter = ("paga", "entrada", "motivo__tipo")
     ordering = ("-id",)
     search_fields = ("descricao",)
     exclude = ("data_hora_criacao", "data_hora_atualizacao", "ativo")
@@ -125,14 +139,14 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
         )
 
 
-@admin.register(CategoriaGasto)
-class CategoriaAdmin(ModelAdmin, ImportExportModelAdmin):
+@admin.register(MotivoGasto)
+class MotivoGastoAdmin(ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
     list_display = (
         "nome",
         "tipo",
-        "descricao",
+        # "descricao",
     )
 
     search_fields = ("nome",)
