@@ -1,6 +1,6 @@
 from django.db import models
 from django.dispatch import receiver
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone as django_timezone
@@ -245,7 +245,7 @@ def set_gasto_date(sender, instance, **kwargs):
         instance.data_gasto = instance.entrada.data_entrada
 
 
-@receiver(pre_save, sender=EntradaDinheiro)
+@receiver(post_save, sender=EntradaDinheiro)
 def set_gasto_date(sender, instance, **kwargs):
     for saida in instance.saidas.all():
         saida.data_gasto = instance.data_entrada
