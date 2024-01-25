@@ -35,7 +35,6 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = (
         "descricao",
         "classe",
-        # "motivo",
         "valor_total",
         "paga",
         "parcela",
@@ -78,7 +77,6 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
             {
                 "fields": (
                     "classe",
-                    # "motivo",
                 )
             },
         ),
@@ -93,7 +91,7 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
         ),
     )
 
-    list_filter = ("paga", "entrada", "classe")  # , "motivo__tipo"
+    list_filter = ("paga", "entrada", "classe")
     ordering = ("-id",)
     search_fields = ("descricao",)
     exclude = ("data_hora_criacao", "data_hora_atualizacao", "ativo")
@@ -145,12 +143,7 @@ class SaidaDinheiroAdmin(ModelAdmin, ImportExportModelAdmin):
 class MotivoGastoAdmin(ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
-    list_display = (
-        "nome",
-        "tipo",
-        # "descricao",
-    )
-
+    list_display = ("nome",)
     search_fields = ("nome",)
     ordering = ("-id",)
     exclude = ("data_hora_criacao", "data_hora_atualizacao", "ativo")
