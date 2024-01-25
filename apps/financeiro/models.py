@@ -152,7 +152,6 @@ class SaidaDinheiro(Base):
 
 class DestinoGasto(Base):
     nome = models.CharField(_("nome"), max_length=50, help_text=_("Nome do destino"))
-    descricao = models.TextField(_("descrição"), blank=True, null=True)
 
     def __str__(self):
         return self.nome
@@ -165,22 +164,6 @@ class DestinoGasto(Base):
 
 
 class MotivoGasto(Base):
-    TIPOS = (
-        ("DES", "Despesas/Necessidade"),
-        ("LAZ", "Lazer/Diversão"),
-        ("ECO", "Economizar "),
-        ("INV", "Investimentos"),
-        ("CRE", "Crescimento Pessoal"),
-        ("IMP", "Imprevistos"),
-    )
-
-    tipo = models.CharField(
-        _("tipo"),
-        max_length=3,
-        choices=TIPOS,
-        default="DES",
-    )
-
     nome = models.CharField(_("nome"), max_length=50)
 
     def __str__(self):
