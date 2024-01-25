@@ -20,7 +20,7 @@ class EntradaDinheiroViewSet(ReadOnlyModelViewSet):
     queryset = EntradaDinheiro.objects.all()
     serializer_class = EntradaDinheiroSerializer
 
-    @action(detail=True, methods=["get"])
+    @action(methods=["get"], detail=True)
     def gastos(self, request, pk, *args, **kwargs):
         entrada = self.get_object()
         gastos = entrada.saidas.all()
@@ -37,14 +37,14 @@ class SaidaDinheiroViewSet(ReadOnlyModelViewSet):
         "data_gasto": ["month"],
     }
 
-    @action(detail=False, methods=["get"])
+    @action(methods=["get"], detail=False)
     def fixas(self, request):
         queryset = self.filter_queryset(self.get_queryset()).filter(fixa=True)
         page = self.paginate_queryset(queryset)
         serializer = self.get_serializer(page, many=True)
         return self.get_paginated_response(serializer.data)
 
-    @action(detail=False, methods=["get"])
+    @action(methods=["get"], detail=False)
     def total_gasto_por_dia(self, request):
         # Obtenha o mês a partir da query string
         filtro_data_gasto = request.query_params.get("data_gasto__month")
@@ -84,7 +84,7 @@ class SaidaDinheiroViewSet(ReadOnlyModelViewSet):
 
         return Response({"resultados": resultados})
 
-    @action(detail=False, methods=["get"])
+    @action(methods=["get"], detail=False)
     def total_gasto_por_categoria(self, request):
         # Obtenha o mês a partir da query string
         filtro_data_gasto = request.query_params.get("data_gasto__month")
@@ -108,7 +108,7 @@ class SaidaDinheiroViewSet(ReadOnlyModelViewSet):
 
         return Response({"resultados": gastos})
 
-    @action(detail=False, methods=["get"])
+    @action(methods=["get"], detail=False)
     def kpis(self, request):
         # Obtenha o mês a partir da query string
         filtro_data_gasto = request.query_params.get("data_gasto__month")
